@@ -8,7 +8,7 @@ type Params = {
   id: string;
 };
 
-export const ViewContactAndEdit = () => {
+const ViewContactAndEdit = () => {
   const { id: paramId } = useParams<Params>()
 
   const { findAContactOnState } = useContactsManager()
@@ -41,3 +41,5 @@ export const ViewContactAndEdit = () => {
     </ContactSkeletonWrapper>
   )
 }
+
+export default ViewContactAndEdit

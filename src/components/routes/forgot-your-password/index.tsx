@@ -10,7 +10,7 @@ import {
 } from './react-hook-form.config'
 import { Container, Form, FormSection, ImageSection, Message } from './styles'
 
-export const ForgotYourPassword = () => {
+const ForgotYourPassword = () => {
   const {
     register,
     formState: { errors, isSubmitting },
@@ -49,3 +49,5 @@ export const ForgotYourPassword = () => {
     </Container>
   )
 }
+
+export default ForgotYourPassword

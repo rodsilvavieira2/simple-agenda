@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-import { SolidButton } from '../../..'
+import { SolidButton } from '../../../..'
 
 export const Container = styled(motion.div)`
   position: absolute;

@@ -22,7 +22,7 @@ import {
   EmptyContactList
 } from './styles'
 
-export const Contacts = () => {
+const Contacts = () => {
   const {
     state: { contacts, isLoading }
   } = useContactsManager()
@@ -130,3 +130,5 @@ export const Contacts = () => {
     </Container>
   )
 }
+
+export default Contacts

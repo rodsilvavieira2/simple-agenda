@@ -22,11 +22,11 @@ import { DefaultProviderProps } from './default-provider-props'
 
 enum collections {
   users = 'users',
-  contacts = 'contacts',
+  contacts = 'contacts'
 }
 
 type AddContactPrams = {
-  contactAvatar: File | null;
+  contactAvatar: File | null
 } & Omit<
   ContactOnDataBase,
   | 'id'
@@ -36,25 +36,25 @@ type AddContactPrams = {
   | 'isOnTrash'
   | 'deletedAt'
   | 'createdAt'
->;
+>
 
 type UpdateContactParams = {
-  avatarFile: File | null;
-} & Partial<Omit<ContactOnDataBase, 'id' | 'avatarUrl'>>;
+  avatarFile: File | null
+} & Partial<Omit<ContactOnDataBase, 'id' | 'avatarUrl'>>
 
 interface ContactsManagerContextData {
-  state: ContactsState;
-  dispatch: Dispatch<ContactsAction>;
-  clearTrash: () => Promise<void>;
-  addContact: (data: AddContactPrams) => Promise<void>;
-  updateContact: (id: string, data: UpdateContactParams) => Promise<void>;
-  restoreContacts: () => Promise<void>;
-  deletePermanently: () => Promise<void>;
-  moveContactToTrash: (id: string) => Promise<void>;
-  findAContactOnState: (id: string) => ContactOnState | null;
-  toggleContactFavorite: (id: string) => Promise<void>;
-  verifyIfExitsAContactByName: (name: string) => boolean;
-  moveAllContactCheckedToTrash: () => Promise<void>;
+  state: ContactsState
+  dispatch: Dispatch<ContactsAction>
+  clearTrash: () => Promise<void>
+  addContact: (data: AddContactPrams) => Promise<void>
+  updateContact: (id: string, data: UpdateContactParams) => Promise<void>
+  restoreContacts: () => Promise<void>
+  deletePermanently: () => Promise<void>
+  moveContactToTrash: (id: string) => Promise<void>
+  findAContactOnState: (id: string) => ContactOnState | null
+  toggleContactFavorite: (id: string) => Promise<void>
+  verifyIfExitsAContactByName: (name: string) => boolean
+  moveAllContactCheckedToTrash: () => Promise<void>
 }
 
 export const ContactsManagerContext = createContext<ContactsManagerContextData>(
@@ -128,7 +128,9 @@ export const ContactsManagerProvider = ({ children }: DefaultProviderProps) => {
 
   const findAContactOnState = useCallback(
     (id: string | number) => {
-      const contact = state.contacts.find((contactState) => contactState.id === id)
+      const contact = state.contacts.find(
+        (contactState) => contactState.id === id
+      )
 
       if (contact) {
         return contact
@@ -285,12 +287,14 @@ export const ContactsManagerProvider = ({ children }: DefaultProviderProps) => {
         status: 'info'
       })
 
-      for (const { id } of contactsChecked) {
-        await getDbRef().doc(id).update({
+      const promises = contactsChecked.map(({ id }) =>
+        getDbRef().doc(id).update({
           isOnTrash: true,
           deletedAt: new Date().getTime()
         })
-      }
+      )
+
+      await Promise.all(promises)
 
       toast({
         title: 'Trash',
@@ -317,12 +321,14 @@ export const ContactsManagerProvider = ({ children }: DefaultProviderProps) => {
         status: 'info'
       })
 
-      for (const { id } of contactsChecked) {
-        await getDbRef().doc(id).update({
+      const promises = contactsChecked.map(({ id }) =>
+        getDbRef().doc(id).update({
           isOnTrash: false,
           deletedAt: null
         })
-      }
+      )
+
+      await Promise.all(promises)
 
       toast({
         title: 'Restore',
@@ -349,13 +355,15 @@ export const ContactsManagerProvider = ({ children }: DefaultProviderProps) => {
         status: 'info'
       })
 
-      for (const { id, avatarUrl } of contactsChecked) {
+      const promises = contactsChecked.map(({ id, avatarUrl }) => async () => {
         if (avatarUrl) {
           await getStorageRef().child(id).delete()
         }
 
         await getDbRef().doc(id).delete()
-      }
+      })
+
+      await Promise.all(promises)
 
       toast({
         title: 'Trash',
@@ -379,13 +387,17 @@ export const ContactsManagerProvider = ({ children }: DefaultProviderProps) => {
         status: 'info'
       })
 
-      for (const { id, avatarUrl } of state.contactOnTrash) {
-        if (avatarUrl) {
-          await getStorageRef().child(id).delete()
-        }
+      const promises = state.contactOnTrash.map(({ id, avatarUrl }) => {
+        return async () => {
+          if (avatarUrl) {
+            await getStorageRef().child(id).delete()
+          }
 
-        await getDbRef().doc(id).delete()
-      }
+          await getDbRef().doc(id).delete()
+        }
+      })
+
+      await Promise.all(promises)
 
       toast({
         title: 'Trash',

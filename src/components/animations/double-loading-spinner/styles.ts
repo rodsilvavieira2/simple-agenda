@@ -6,7 +6,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
+  inset: 0;
   height: 100%;
+  width: 100%;
 `
 
 export const FirstRing = styled(motion.div)`

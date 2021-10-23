@@ -13,10 +13,10 @@ import {
 } from './styles'
 
 type State = {
-  from: string;
-};
+  from: string
+}
 
-export const Authentication = () => {
+const Authentication = () => {
   const [isInSignUpMode, setIsInSignUpMode] = useState(false)
 
   const { replace, location } = useHistory<State>()
@@ -61,3 +61,5 @@ export const Authentication = () => {
     </Container>
   )
 }
+
+export default Authentication

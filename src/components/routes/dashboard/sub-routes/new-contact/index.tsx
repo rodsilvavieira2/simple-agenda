@@ -11,7 +11,7 @@ import { FormWrapper } from './form-wrapper'
 import { NewContactFormData, newContactSchema } from './hook-form.config'
 import { Container, Head, BackButton } from './styles'
 
-export const NewContact = () => {
+const NewContact = () => {
   const [contactAvatar, setContactAvatar] = useState<File | null>(null)
   const [isAErrorOnForm, setIsAErrorOnForm] = useState(false)
 
@@ -87,3 +87,5 @@ export const NewContact = () => {
     </Container>
   )
 }
+
+export default NewContact

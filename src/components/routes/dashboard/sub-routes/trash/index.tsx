@@ -2,15 +2,15 @@ import { AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
 import { AiOutlineClear } from 'react-icons/ai'
 
-import { DoubleLoadingSpinner, fadeInVariants } from '../../..'
+import { DoubleLoadingSpinner, fadeInVariants } from '../../../..'
+import { DeletedCardContact } from '../../../..'
 import {
   useContactCheckedStatus,
   useContactsManager,
   useMacroUserActionsContext,
   useSearchForAContact,
   useUserDecisionModal
-} from '../../../hooks'
-import { DeletedCardContact } from '../../card'
+} from '../../../../../hooks'
 import { CheckedStatusMenuTrash } from './checked-status-menu-trash'
 import { MoreOptionsMenuTrash } from './more-options-menu-trash'
 import {
@@ -25,15 +25,14 @@ import {
   MobileClearTrashButton
 } from './styles'
 
-export const Trash = () => {
+const Trash = () => {
   const {
     state: { contactOnTrash, isLoading }
   } = useContactsManager()
 
   const { clearTrash } = useContactsManager()
 
-  const { isAllChecked, isOneChecked } =
-    useContactCheckedStatus(contactOnTrash)
+  const { isAllChecked, isOneChecked } = useContactCheckedStatus(contactOnTrash)
 
   const {
     state: { searchValue },
@@ -157,3 +156,5 @@ export const Trash = () => {
     </Container>
   )
 }
+
+export default Trash

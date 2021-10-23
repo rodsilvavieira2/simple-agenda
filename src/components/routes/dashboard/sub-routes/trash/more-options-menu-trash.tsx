@@ -1,8 +1,8 @@
 import { FaTrashRestoreAlt } from 'react-icons/fa'
 import { MdMoreVert, MdClear } from 'react-icons/md'
 
-import { Menu, MenuButton, IconButton, MenuList, MenuItem } from '../../..'
-import { useContactsManager, useUserDecisionModal } from '../../../hooks'
+import { Menu, MenuButton, IconButton, MenuList, MenuItem } from '../../../..'
+import { useContactsManager, useUserDecisionModal } from '../../../../../hooks'
 
 export const MoreOptionsMenuTrash = () => {
   const { restoreContacts, deletePermanently } = useContactsManager()
