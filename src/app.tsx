@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { PrivateRouter, RoteLazyLoading } from './components'
-import { MacroUserActionsProvider } from './context'
 
 const Authentication = lazy(() => import('./components/routes/authentication'))
 const DashBoard = lazy(() => import('./components/routes/dashboard'))
@@ -23,9 +22,7 @@ export const App = () => {
         </Route>
 
         <PrivateRouter path="/">
-          <MacroUserActionsProvider>
-            <DashBoard />
-          </MacroUserActionsProvider>
+          <DashBoard />
         </PrivateRouter>
       </Switch>
     </Suspense>

@@ -1,11 +1,13 @@
-import { useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MdPerson, MdEmail, MdLock } from 'react-icons/md'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { RoundedInput, VerifyYourEmailModal } from '../../../..'
-import { useAuthContext } from '../../../../../hooks'
+import {
+  useAuthContext,
+  useMacroUserActionsContext
+} from '../../../../../hooks'
 import { formVariants } from '../../framer-motion.config'
 import { DefaultFormProps } from '../default-form-props'
 import { Form, FormButton, ToggleMode } from '../default-style'
@@ -14,9 +16,6 @@ import { SignUpFormData, SignUpSchema } from './react-hook-form.config'
 type SignUpFormProps = DefaultFormProps
 
 export const SignUpForm = ({ onRequestToggle }: SignUpFormProps) => {
-  const [isVerifyYourEmailModalOpen, setIsVerifyYourEmailModalOpen] =
-    useState(false)
-
   const {
     register,
     handleSubmit,
@@ -27,9 +26,10 @@ export const SignUpForm = ({ onRequestToggle }: SignUpFormProps) => {
 
   const { createUserWithEmailAndPassword } = useAuthContext()
 
-  const toggleVerifyEmailModal = useCallback(() => {
-    setIsVerifyYourEmailModalOpen((prev) => !prev)
-  }, [])
+  const {
+    state: { isVerifyEmailModalOpen },
+    dispatch
+  } = useMacroUserActionsContext()
 
   const onSubmit: SubmitHandler<SignUpFormData> = async ({
     email,
@@ -37,7 +37,6 @@ export const SignUpForm = ({ onRequestToggle }: SignUpFormProps) => {
     password
   }) => {
     await createUserWithEmailAndPassword(email, password, name)
-    toggleVerifyEmailModal()
   }
 
   return (
@@ -89,8 +88,12 @@ export const SignUpForm = ({ onRequestToggle }: SignUpFormProps) => {
       </Form>
 
       <VerifyYourEmailModal
-        isOpen={isVerifyYourEmailModalOpen}
-        onRequestClose={toggleVerifyEmailModal}
+        isOpen={isVerifyEmailModalOpen}
+        onRequestClose={() =>
+          dispatch({
+            type: 'toggle-verify-your-email-modal'
+          })
+        }
       />
     </>
   )

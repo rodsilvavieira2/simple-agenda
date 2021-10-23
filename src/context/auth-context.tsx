@@ -1,33 +1,30 @@
 import { createContext, useCallback, useEffect, useState } from 'react'
 
 import { User } from '../@types'
-import { useToast } from '../hooks'
+import { useMacroUserActionsContext, useToast } from '../hooks'
 import { auth } from '../services'
 import { DefaultProviderProps } from './default-provider-props'
 
 enum localStorageKeys {
-  user = 'contacts.user',
+  user = 'contacts.user'
 }
 
 enum codeErrors {
-  email_already_exists = 'auth/email-already-exists',
+  email_already_exists = 'auth/email-already-in-use',
   user_not_found = 'auth/user-not-found',
-  wrong_password = 'auth/wrong-password',
+  wrong_password = 'auth/wrong-password'
 }
 
 interface AuthContextData {
-  user: User | null;
-  signOut: () => Promise<void>;
-  sendResetPasswordEmail: (email: string) => Promise<void>;
-  signInWithEmailAndPassword: (
-    email: string,
-    password: string,
-  ) => Promise<void>;
+  user: User | null
+  signOut: () => Promise<void>
+  sendResetPasswordEmail: (email: string) => Promise<void>
+  signInWithEmailAndPassword: (email: string, password: string) => Promise<void>
   createUserWithEmailAndPassword: (
     email: string,
     password: string,
-    displayName: string,
-  ) => Promise<void>;
+    displayName: string
+  ) => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextData>({} as any)
@@ -46,6 +43,8 @@ export const AuthProvider = ({ children }: DefaultProviderProps) => {
   })
 
   const { toast } = useToast()
+
+  const { dispatch } = useMacroUserActionsContext()
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((currentUser) => {
@@ -89,6 +88,10 @@ export const AuthProvider = ({ children }: DefaultProviderProps) => {
 
           await resp.user.sendEmailVerification()
         }
+
+        dispatch({
+          type: 'toggle-verify-your-email-modal'
+        })
       } catch (err: any) {
         switch (err.code) {
           case codeErrors.email_already_exists: {
@@ -109,7 +112,7 @@ export const AuthProvider = ({ children }: DefaultProviderProps) => {
         }
       }
     },
-    [toast]
+    [dispatch, toast]
   )
 
   const signInWithEmailAndPassword = useCallback(

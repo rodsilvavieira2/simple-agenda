@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
 import { App } from './app'
-import { AuthProvider } from './context'
+import { AuthProvider, MacroUserActionsProvider } from './context'
 import { Global } from './styles/global'
 import { theme } from './styles/theme'
 
@@ -12,9 +12,12 @@ render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <MacroUserActionsProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </MacroUserActionsProvider>
+
         <Global />
       </ThemeProvider>
     </BrowserRouter>
