@@ -20,7 +20,7 @@ export const CheckedStatusMenuTrash = ({
         </IconButton>
       </MenuButton>
 
-      <MenuList>
+      <MenuList menuPosition='right'>
         <MenuItem.Button
           onClick={() =>
             dispatch({

@@ -22,7 +22,7 @@ export const MoreOptionsMenuTrash = () => {
           </IconButton>
         </MenuButton>
 
-        <MenuList>
+        <MenuList menuPosition='right' >
           <MenuItem.Button onClick={() => restoreContacts()}>
             <FaTrashRestoreAlt />
             Restore

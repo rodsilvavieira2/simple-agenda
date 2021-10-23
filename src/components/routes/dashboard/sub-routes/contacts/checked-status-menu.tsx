@@ -4,7 +4,7 @@ import { Menu, MenuButton, IconButton, MenuList, MenuItem } from '../../../..'
 import { useContactsManager } from '../../../../../hooks'
 
 interface CheckedStatusMenuProps {
-  isAllChecked: boolean;
+  isAllChecked: boolean
 }
 
 export const CheckedStatusMenu = ({ isAllChecked }: CheckedStatusMenuProps) => {
@@ -13,7 +13,12 @@ export const CheckedStatusMenu = ({ isAllChecked }: CheckedStatusMenuProps) => {
   return (
     <Menu>
       <MenuButton>
-        <IconButton aria-label="toggle all contacts checked status" size="3rem">
+        <IconButton
+          role="checkbox"
+          aria-checked={isAllChecked ? 'true' : 'mixed'}
+          aria-label="toggle all contacts checked status"
+          size="3rem"
+        >
           {isAllChecked ? <MdCheckBox /> : <MdIndeterminateCheckBox />}
         </IconButton>
       </MenuButton>

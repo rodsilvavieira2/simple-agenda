@@ -165,13 +165,13 @@ const defaultNavItemStyle = css`
 `
 
 interface NavLinkProps {
-  isActiveLink?: boolean;
+  $isActiveLink?: boolean;
 }
 
 export const NavLink = styled(Link)<NavLinkProps>`
   ${defaultNavItemStyle}
 
-  ${(props) => (props.isActiveLink ? navItemFocusAndHoverTransition : '')}
+  ${(props) => (props.$isActiveLink ? navItemFocusAndHoverTransition : '')}
 `
 
 export const NavButton = styled.button`

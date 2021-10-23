@@ -160,6 +160,7 @@ export const MobileClearTrashButton = styled(SolidButton)`
   > svg {
     flex-shrink: 0;
     font-size: 1.5rem;
+    margin: 0;
   }
 
   border-radius: 3.5rem;

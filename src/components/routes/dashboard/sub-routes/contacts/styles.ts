@@ -87,6 +87,10 @@ export const CheckedOptions = styled(motion.div)`
 
   font-size: 1.5rem;
   padding-left: 1rem;
+
+  > span + span {
+    margin-left: 0.5rem;
+  }
 `
 
 export const RoundedIconButton = styled(IconButton)`

@@ -98,6 +98,7 @@ const Contacts = () => {
       </Header>
 
       <Counter>CONTACTS ({filteredContacts.length})</Counter>
+
       <ContactsWrapper>
         {isLoading
           ? (

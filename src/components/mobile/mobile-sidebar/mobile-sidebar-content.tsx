@@ -80,7 +80,7 @@ export const MobileSidebarContent = () => {
           </NewContactButton>
 
           <NavIntens>
-            <NavLink to="/" isActiveLink={pathname === '/'}>
+            <NavLink to="/" $isActiveLink={pathname === '/'}>
               <RiContactsBook2Fill /> Contacts
             </NavLink>
 
@@ -96,7 +96,7 @@ export const MobileSidebarContent = () => {
               <FiUpload /> Export
             </NavButton>
 
-            <NavLink to="/trash" isActiveLink={pathname === '/trash'}>
+            <NavLink to="/trash" $isActiveLink={pathname === '/trash'}>
               <FiTrash2 />
               Trash
             </NavLink>
